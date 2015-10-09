@@ -58,9 +58,6 @@ var MainGame = {
 				if (paddle_.body.x < 0) {
 					paddle_.body.x = 0;
 				}
-				
-				//console.log("Paddle X: " + paddle_.x);
-				//console.log("Ball X: " + ball_.x);
 			}
 			else if (cursors_.right.isDown)
 			{
@@ -109,7 +106,7 @@ var MainGame = {
 			highScoreText_ = game.add.bitmapText(5, SCREEN_HEIGHT - 30, 'carrier_command','High Score: ' + highScore_, 8);	
 			currentScore_ = 0;
 			currentScoreText_ = game.add.bitmapText(5, SCREEN_HEIGHT - 15, 'carrier_command','Current Score: ' + currentScore_, 8);
-			lives_ = 10;
+			lives_ = 2;
 			livesText_ = game.add.bitmapText(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 25, 'carrier_command','Lives: ' + lives_, 8);
 
 			//Create paddle
@@ -139,8 +136,8 @@ var MainGame = {
 			bricks_ = game.add.group();
 			bricks_.enableBody = true;
 			var brick;
-			for (var y = 0; y < 1; y++) {
-				for (var x = 0; x < 1; x++) {
+			for (var y = 0; y < 6; y++) {
+				for (var x = 0; x < 10; x++) {
 					brick = bricks_.create(80 + (x * (64)), 50 + (y * (32 + 12)), "element_rectangle_"+y);
 					brick.scale.setTo(.75, .75);
 					brick.body.immovable = true;
