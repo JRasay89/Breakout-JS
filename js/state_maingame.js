@@ -17,6 +17,7 @@ var isBallReleased;
 //Keyboard up, left, down, and right keys
 var cursors_;
 
+//Reference to the sound effects
 var paddleHitSound_;
 var bricksBreakSound_;
 var ballLostSound_;
@@ -99,6 +100,7 @@ var MainGame = {
 			//Turn off collision for the bottom of the world
 			game.physics.arcade.checkCollision.down = false;
 			
+			//Get the keys to control the paddle
 			cursors_ = game.input.keyboard.createCursorKeys();
 			
 			//Create text for high score, current score, and lives
@@ -116,6 +118,7 @@ var MainGame = {
 			paddle_.name = "Paddle";
 			game.physics.arcade.enable(paddle_);
 			paddle_.anchor.setTo(0.5, 0.5);
+			paddle_.body.bounce.set(1);
 			paddle_.body.collideWorldBounds = true;
 			paddle_.body.immovable = true;
 			
@@ -140,6 +143,7 @@ var MainGame = {
 				for (var x = 0; x < 10; x++) {
 					brick = bricks_.create(80 + (x * (64)), 50 + (y * (32 + 12)), "element_rectangle_"+y);
 					brick.scale.setTo(.75, .75);
+					brick.body.bounce.set(1);
 					brick.body.immovable = true;
 				}
 			}
@@ -151,7 +155,7 @@ var MainGame = {
 		},
 		
 		/*
-		 * Determine the balls velocity based on where it hits the paddle.
+		 * Determine the balls horizontal velocity based on where it hits the paddle.
 		 * @param paddle - reference to the paddle.
 		 * @param ball - reference to the ball.
 		 */
@@ -159,7 +163,6 @@ var MainGame = {
 			//If ball perfectly hits the middle of the paddle
 			//Set the balls velocity at a random number of 0 to 7*20
 			if ((paddle.body.x + (paddle.body.width/2)) == (ball.body.x + (ball.body.width/2))) {
-				console.log("Middle");
 				ball.body.velocity.x = 7 * Math.random() * 20;
 			}
 			//If the ball hits the left side of the paddle
@@ -182,7 +185,7 @@ var MainGame = {
 		},
 		
 		/*
-		 * Kill the bricks when it is hit by the ball.
+		 * Kill the bricks when it collides with the ball.
 		 */
 		breakBrick: function(ball, brick) {
 			//Kill the brick that was hit
